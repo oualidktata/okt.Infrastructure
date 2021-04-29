@@ -10,11 +10,11 @@ namespace Infra.oAuthService
     public class KeyCloackAuthService : ITokenService
     {
 
-        private OktaToken _token = new OktaToken();
-        private readonly OktaSettings _oktaSettings;
-        public KeyCloackAuthService(OktaSettings settings)
+        private JwtToken _token = new JwtToken();
+        private readonly APIKeySettings _apiKeySettings;
+        public KeyCloackAuthService(APIKeySettings settings)
         {
-            _oktaSettings = settings;
+            _apiKeySettings = settings;
         }
         public async Task<string> GetToken()
         {
@@ -25,19 +25,19 @@ namespace Infra.oAuthService
             return _token.AccessToken;
         }
 
-        private async Task<OktaToken> GetNewAccessToken()
+        private async Task<JwtToken> GetNewAccessToken()
         {
-            var token = new OktaToken();
+            //var token = new JwtToken();
             var client = new HttpClient();
-            var clientCreds = System.Text.Encoding.UTF8.GetBytes($"{_oktaSettings.ClientId}:{_oktaSettings.ClientSecret}");
+            var clientCreds = System.Text.Encoding.UTF8.GetBytes($"{_apiKeySettings.ClientId}:{_apiKeySettings.ClientSecret}");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(clientCreds));
 
             var postMessage = new Dictionary<string, string>();
             postMessage.Add("grant_type", "client_credentials");
-            postMessage.Add("scope", "custom_scope");
+            postMessage.Add("scope", "crm-api-backend");
 
-            var request = new HttpRequestMessage(HttpMethod.Post, _oktaSettings.TokenUrl)
+            var request = new HttpRequestMessage(HttpMethod.Post, _apiKeySettings.TokenUrl)
             {
                 Content = new FormUrlEncodedContent(postMessage)
             };
@@ -47,7 +47,7 @@ namespace Infra.oAuthService
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                _token = JsonConvert.DeserializeObject<OktaToken>(json);
+                _token = JsonConvert.DeserializeObject<JwtToken>(json);
                 _token.ExpiresAt = DateTime.UtcNow.AddSeconds(_token.ExpiresIn);
             }
             else
@@ -58,7 +58,7 @@ namespace Infra.oAuthService
 
         }
 
-        private class OktaToken
+        private class JwtToken
         {
             [JsonProperty(PropertyName = "access_token")]
             public string AccessToken { get; set; }

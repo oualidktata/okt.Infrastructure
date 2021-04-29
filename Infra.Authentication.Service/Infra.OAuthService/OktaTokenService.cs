@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Infra.oAuthService
 {
-    public class OktaTokenService : ITokenService
+    public partial class OktaTokenService : ITokenService
     {
 
         private OktaToken _token = new OktaToken();
-        private readonly OktaSettings _oktaSettings;
-        public OktaTokenService(OktaSettings settings)
+        private readonly APIKeySettings _oktaSettings;
+        public OktaTokenService(APIKeySettings settings)
         {
             _oktaSettings = settings;
         }
@@ -56,31 +56,6 @@ namespace Infra.oAuthService
             }
             return _token;
 
-        }
-
-        private class OktaToken
-        {
-            [JsonProperty(PropertyName = "access_token")]
-            public string AccessToken { get; set; }
-
-            [JsonProperty(PropertyName = "expires_in")]
-            public int ExpiresIn { get; set; }
-
-            public DateTime ExpiresAt { get; set; }
-
-            public string Scope { get; set; }
-
-            [JsonProperty(PropertyName = "token_type")]
-            public string TokenType { get; set; }
-
-            public bool IsValidAndNotExpiring
-            {
-                get
-                {
-                    return !string.IsNullOrEmpty(AccessToken) &&
-                        ExpiresAt > DateTime.UtcNow.AddSeconds(30);
-                }
-            }
         }
     }
 }
