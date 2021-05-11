@@ -2,8 +2,9 @@
 
 namespace Infra.oAuthService
 {
-    public interface ITokenService
+    public interface IAuthService
     {
         Task<string> GetToken();
+        IOAuthSettings Settings { get; }
     }
 }

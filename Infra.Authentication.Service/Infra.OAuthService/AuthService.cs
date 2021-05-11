@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Infra.oAuthService
 {
-    public partial class OktaTokenService : ITokenService
+    public class AuthService: IAuthService
     {
+        private AuthenticationToken _token = new AuthenticationToken();
+        public IOAuthSettings Settings { get; }
 
-        private OktaToken _token = new OktaToken();
-        private readonly APIKeySettings _oktaSettings;
-        public OktaTokenService(APIKeySettings settings)
+        public AuthService(IOAuthSettings settings)
         {
-            _oktaSettings = settings;
+            Settings = settings;
         }
         public async Task<string> GetToken()
         {
@@ -25,19 +25,18 @@ namespace Infra.oAuthService
             return _token.AccessToken;
         }
 
-        private async Task<OktaToken> GetNewAccessToken()
+        private async Task<AuthenticationToken> GetNewAccessToken()
         {
-            var token = new OktaToken();
             var client = new HttpClient();
-            var clientCreds = System.Text.Encoding.UTF8.GetBytes($"{_oktaSettings.ClientId}:{_oktaSettings.ClientSecret}");
+            var clientCreds = System.Text.Encoding.UTF8.GetBytes($"{Settings.ClientId}:{Settings.ClientSecret}");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(clientCreds));
 
             var postMessage = new Dictionary<string, string>();
             postMessage.Add("grant_type", "client_credentials");
-            postMessage.Add("scope", "custom_scope");
+            postMessage.Add("scope", "custom_scope crm-api-backend");
 
-            var request = new HttpRequestMessage(HttpMethod.Post, _oktaSettings.TokenUrl)
+            var request = new HttpRequestMessage(HttpMethod.Post, Settings.TokenUrl)
             {
                 Content = new FormUrlEncodedContent(postMessage)
             };
@@ -47,7 +46,7 @@ namespace Infra.oAuthService
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                _token = JsonConvert.DeserializeObject<OktaToken>(json);
+                _token = JsonConvert.DeserializeObject<AuthenticationToken>(json);
                 _token.ExpiresAt = DateTime.UtcNow.AddSeconds(_token.ExpiresIn);
             }
             else
