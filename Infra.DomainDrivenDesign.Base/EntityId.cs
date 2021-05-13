@@ -15,10 +15,20 @@ namespace Infra.DomainDrivenDesign.Base
         protected EntityId(string id) {
             _guid = Guid.Parse(id);
         }
+        
+        protected EntityId(Guid guid) {
+            _guid = guid;
+        }
 
         public override string ToString()
         {
             return _guid.ToString();
+        }
+
+        public Guid Key
+        {
+            get { return _guid;}
+            set { _guid = value; }
         }
 
         protected override IEnumerable<object> GetEqualityValues()

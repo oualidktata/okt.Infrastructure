@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Infra.DomainDrivenDesign.Base
@@ -7,6 +9,9 @@ namespace Infra.DomainDrivenDesign.Base
     {
         private const int HighPrime = 684563;
         protected abstract IEnumerable<object> GetEqualityValues();
+        
+        [Key]
+        public Guid Id { get; set; }
 
         public override int GetHashCode()
         {

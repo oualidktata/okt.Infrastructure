@@ -1,7 +1,8 @@
-﻿namespace Infra.DomainDrivenDesign.Base
+﻿using Infra.Common.Models;
+
+namespace Infra.DomainDrivenDesign.Base
 {
-    public interface IAggregateRoot<out TId> : IEntity<TId>
-        where TId : IEntityId
+    public interface IAggregateRoot : IEntity, IRepoQueryable
     {
     }
 }

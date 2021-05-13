@@ -1,7 +1,9 @@
-﻿namespace Infra.DomainDrivenDesign.Base
+﻿using System;
+
+namespace Infra.DomainDrivenDesign.Base
 {
-    public interface IEntity<out TId> where TId : IEntityId
+    public interface IEntity
     {
-        TId Id { get; }
+        Guid Id { get; }
     }
 }

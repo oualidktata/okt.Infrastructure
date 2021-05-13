@@ -1,6 +1,8 @@
-﻿namespace Infra.DomainDrivenDesign.Base
+﻿using Infra.Common.Models;
+
+namespace Infra.DomainDrivenDesign.Base
 {
-    public abstract class AggregateRoot<TId> : Entity<TId> where TId : IEntityId
+    public abstract class AggregateRoot : Entity, IRepoQueryable
     {
         protected AggregateRoot() {}
     }

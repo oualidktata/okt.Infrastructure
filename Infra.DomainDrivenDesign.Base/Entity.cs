@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using Infra.Common.Models;
 
 namespace Infra.DomainDrivenDesign.Base
 {
-    public abstract class Entity<TId> : IEntity<TId>
-        where TId : IEntityId
+    public abstract class Entity : BaseEntity, IEntity
     {
-        public TId Id { get; protected set; }
+        [Key]
+        public Guid Id { get; protected set; }
+
+        protected Entity()
+        {
+            
+        }
 
         public override bool Equals(
             object obj)
@@ -18,14 +25,12 @@ namespace Infra.DomainDrivenDesign.Base
                 obj)) return true;
             if (obj.GetType() != GetType()) return false;
 
-            return EqualityComparer<TId>.Default.Equals(
-                Id,
-                ((Entity<TId>) obj).Id);
+            return Id == ((Entity) obj).Id;
         }
 
         public static bool operator ==(
-            Entity<TId> left,
-            Entity<TId> right)
+            Entity left,
+            Entity right)
         {
             if (ReferenceEquals(
                 left,
@@ -40,12 +45,12 @@ namespace Infra.DomainDrivenDesign.Base
         }
 
         public static bool operator !=(
-            Entity<TId> left,
-            Entity<TId> right) => !(left == right);
+            Entity left,
+            Entity right) => !(left == right);
 
         public override int GetHashCode()
         {
-            if (Id.Equals(default(TId)))
+            if (Id.Equals(default(Guid)))
             {
                 return base.GetHashCode();
             }
