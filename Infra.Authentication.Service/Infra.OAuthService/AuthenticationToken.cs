@@ -3,9 +3,7 @@ using System;
 
 namespace Infra.oAuthService
 {
-    public partial class OktaTokenService
-    {
-        private class OktaToken
+    public class AuthenticationToken
         {
             [JsonProperty(PropertyName = "access_token")]
             public string AccessToken { get; set; }
@@ -29,5 +27,4 @@ namespace Infra.oAuthService
                 }
             }
         }
-    }
 }

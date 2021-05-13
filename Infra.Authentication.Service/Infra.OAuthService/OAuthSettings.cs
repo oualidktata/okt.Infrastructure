@@ -2,33 +2,23 @@
 
 namespace Infra.oAuthService
 {
-    public class OAuthSettings : IOAuthSettings
+    public class OAuthSettings :IOAuthSettings
     {
+        public string TokenUrl { get; set; }
+        public string ClientId { get; set; }
+        public string ClientSecret { get; set; }
+        public string[] Audiences { get; set; }
+        public string Issuer { get; set; }
+        public string Scheme { get; set; }
 
-        //public static string OAuth2RedirectUrl { get; set; }
-        public string TokenUrl => "/api/oauth/token";
-        //public static string AuthorizationUrl  => "/api/oauth/auth";
-        //public static string CallBackUrl => "/api/oauth/callback";
 
-        public string ClientId => "SECRET";
-        public string ClientSecret => "SECRET";
-
-        public string BasicAuthBase64 => "Basic SECRET==";
-
-        public string AuthHeaderName => "Authorization";
-
-        public string Issuer => "https://dev-SECRET.okta.com/oauth2/default";
-        public string[] Audiences => new[] { "api://default" };
-
-        public string Authorization_Endpoint => "";
-        public string Token_Endpoint => "https://dev-SECRET.okta.com/oauth2/default/v1/token";
-
+        public string AuthHeaderName { get; set; }
         public IDictionary<string, string> Scopes => new Dictionary<string, string>() {
                                     { "custom_scope", "custom scope for CC defined in OKTA" },
                                 };
 
-        public string SchemeName => "Bearer";
-      
-        public string TokenAuthenticationScheme => "TokenAuthenticationScheme";
+        public string AuthorizationEndpoint { get; set; }
+
+        //public string BasicAuthBase64 => throw new System.NotImplementedException();
     }
 }
