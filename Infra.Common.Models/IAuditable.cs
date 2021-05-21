@@ -1,4 +1,4 @@
-﻿namespace Troupon.Catalog.Core.Domain.Entities
+﻿namespace Infra.Common.Models
 {
     public interface IAuditable
     {
