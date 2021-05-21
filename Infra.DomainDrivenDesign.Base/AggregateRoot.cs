@@ -2,8 +2,11 @@
 
 namespace Infra.DomainDrivenDesign.Base
 {
-    public abstract class AggregateRoot : Entity, IRepoQueryable
+    public abstract class AggregateRoot : Entity,
+        IRepoQueryable
     {
-        protected AggregateRoot() {}
+        protected AggregateRoot()
+        {
+        }
     }
 }

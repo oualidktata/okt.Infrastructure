@@ -2,7 +2,8 @@
 
 namespace Infra.DomainDrivenDesign.Base
 {
-    public interface IAggregateRoot : IEntity, IRepoQueryable
+    public interface IAggregateRoot : IEntity,
+        IRepoQueryable
     {
     }
 }

@@ -6,9 +6,9 @@ namespace Infra.oAuthService
     {
         public string[] ValidAudiences { get; set; }
         public string ValidIssuer { get; set; }
+
         public TokenAuthenticationOptions()
         {
-
         }
     }
 }

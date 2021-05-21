@@ -4,14 +4,13 @@ using Infra.Common.Models;
 
 namespace Infra.DomainDrivenDesign.Base
 {
-    public abstract class Entity : BaseEntity, IEntity
+    public abstract class Entity : BaseEntity,
+        IEntity
     {
-        [Key]
-        public Guid Id { get; protected set; }
+        [Key] public Guid Id { get; protected set; }
 
         protected Entity()
         {
-            
         }
 
         public override bool Equals(

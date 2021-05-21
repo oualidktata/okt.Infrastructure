@@ -6,7 +6,9 @@ namespace Infra.oAuthService
     {
         string[] Audiences { get; }
         string AuthHeaderName { get; }
+
         string AuthorizationEndpoint { get; }
+
         //string BasicAuthBase64 { get; }
         string ClientId { get; }
         string ClientSecret { get; }

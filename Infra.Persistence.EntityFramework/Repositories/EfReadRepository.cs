@@ -15,7 +15,8 @@ namespace Infra.Persistence.EntityFramework.Repositories
     {
         protected readonly TDbContext _context;
 
-        public EfReadRepository(IDbContextFactory<TDbContext> dbContextFactory)
+        public EfReadRepository(
+            IDbContextFactory<TDbContext> dbContextFactory)
         {
             _context = dbContextFactory.CreateDbContext();
         }
@@ -35,7 +36,7 @@ namespace Infra.Persistence.EntityFramework.Repositories
         public Expression Expression => Queryable.Expression;
 
         public IQueryProvider Provider => Queryable.Provider;
-        
+
         protected virtual IQueryable<TEntity> Queryable => _context.Set<TEntity>()
             .AsQueryable();
     }

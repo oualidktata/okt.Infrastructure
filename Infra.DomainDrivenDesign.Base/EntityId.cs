@@ -3,20 +3,25 @@ using System.Collections.Generic;
 
 namespace Infra.DomainDrivenDesign.Base
 {
-    public abstract class EntityId : ValueObject, IEntityId
+    public abstract class EntityId : ValueObject,
+        IEntityId
     {
         private Guid _guid;
 
         protected EntityId()
         {
-            _guid = Guid.NewGuid();  
+            _guid = Guid.NewGuid();
         }
 
-        protected EntityId(string id) {
+        protected EntityId(
+            string id)
+        {
             _guid = Guid.Parse(id);
         }
-        
-        protected EntityId(Guid guid) {
+
+        protected EntityId(
+            Guid guid)
+        {
             _guid = guid;
         }
 
@@ -27,7 +32,7 @@ namespace Infra.DomainDrivenDesign.Base
 
         public Guid Key
         {
-            get { return _guid;}
+            get { return _guid; }
             set { _guid = value; }
         }
 

@@ -23,10 +23,8 @@ namespace Infra.oAuthService
     //    public string Authorization_Endpoint => "";
     //    public string Token_Endpoint => "https://dev-SECRET.okta.com/oauth2/default/v1/token";
 
-       
-
     //    public string SchemeName => "Bearer";
-      
+
     //    public string TokenAuthenticationScheme => "TokenAuthenticationScheme";
 
     //    public IDictionary<string, string> Scopes => throw new System.NotImplementedException();

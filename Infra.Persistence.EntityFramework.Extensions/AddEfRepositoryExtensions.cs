@@ -57,7 +57,7 @@ namespace Infra.Persistence.EntityFramework.Extensions
                     var concreteType = repoConcreteType.MakeGenericType(
                         type,
                         typeof(TDbContext));
-                    
+
                     services.AddTransient(
                         interfaceType,
                         concreteType);

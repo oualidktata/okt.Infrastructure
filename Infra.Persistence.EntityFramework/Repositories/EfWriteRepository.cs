@@ -11,46 +11,61 @@ namespace Infra.Persistence.EntityFramework.Repositories
     {
         protected readonly TDbContext _context;
 
-        public EfWriteRepository(IDbContextFactory<TDbContext> dbContextFactory)
+        public EfWriteRepository(
+            IDbContextFactory<TDbContext> dbContextFactory)
         {
             _context = dbContextFactory.CreateDbContext();
         }
-        
-        public virtual TEntity Create(TEntity entity)
+
+        public virtual TEntity Create(
+            TEntity entity)
         {
-            var result = _context.Set<TEntity>().Add(entity);
+            var result = _context.Set<TEntity>()
+                .Add(entity);
             _context.SaveChanges();
+
             return result.Entity;
         }
 
-        public void Create(IEnumerable<TEntity> entities)
+        public void Create(
+            IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().AddRange(entities);
+            _context.Set<TEntity>()
+                .AddRange(entities);
             _context.SaveChanges();
         }
 
-        public TEntity Update(TEntity entity)
+        public TEntity Update(
+            TEntity entity)
         {
-            var result = _context.Set<TEntity>().Update(entity);
+            var result = _context.Set<TEntity>()
+                .Update(entity);
             _context.SaveChanges();
+
             return result.Entity;
         }
 
-        public void Update(IEnumerable<TEntity> entities)
+        public void Update(
+            IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().UpdateRange(entities);
+            _context.Set<TEntity>()
+                .UpdateRange(entities);
             _context.SaveChanges();
         }
 
-        public void Delete(TEntity entity)
+        public void Delete(
+            TEntity entity)
         {
-            _context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>()
+                .Remove(entity);
             _context.SaveChanges();
         }
 
-        public void Delete(IEnumerable<TEntity> entities)
+        public void Delete(
+            IEnumerable<TEntity> entities)
         {
-            _context.Set<TEntity>().RemoveRange(entities);
+            _context.Set<TEntity>()
+                .RemoveRange(entities);
             _context.SaveChanges();
         }
     }
