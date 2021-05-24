@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Infra.Common.Models\Infra.Common.Models.csproj" />
       <ProjectReference Include="..\Infra.Persistence\Infra.Persistence.csproj" />
     </ItemGroup>
 
