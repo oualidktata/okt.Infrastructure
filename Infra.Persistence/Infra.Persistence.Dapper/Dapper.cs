@@ -31,7 +31,12 @@ namespace Infra.Persistence.Dapper
       DynamicParameters parameters,
       CommandType commandType = CommandType.StoredProcedure)
     {
-      throw new NotImplementedException();
+      using IDbConnection db = GetDbConnection();
+
+      return db.Execute(
+          sqlQuery,
+          parameters,
+          commandType: commandType);
     }
 
     public T Get<T>(
