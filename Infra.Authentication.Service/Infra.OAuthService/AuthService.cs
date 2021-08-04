@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -43,7 +43,7 @@ namespace Infra.oAuthService
                 "client_credentials");
             postMessage.Add(
                 "scope",
-                "custom_scope crm-api-backend");
+                "arai");
 
             var request = new HttpRequestMessage(
                 HttpMethod.Post,
