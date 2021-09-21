@@ -1,4 +1,4 @@
-# troupon.deal.management
+# ARAI Project
 
 ## Table of Contents
 * [About The Project](#About-The-Project)
@@ -13,20 +13,20 @@ This POC was done for ARAI project as an initiative to create a referencial arch
 
 ### Built with
 Project is mainly built with those frameworks:
-* `ASP.NET Core`
-* `EntityFramework`
-* `HotChocolate`
-* `MediatR`
+* ASP.NET Core
+* EntityFramework
+* HotChocolate
+* MediatR
 
 And dev tools:
 
-* `Automapper`
-* `Newtonsoft`
-* `Serilog`
-* `Swagger`
-  * `Swashbuckle`
-  * `NSwag.ApiDescription.Client`
-* `OneOf`
+* Automapper
+* Newtonsoft
+* Serilog
+* Swagger
+  * Swashbuckle
+  * NSwag.ApiDescription.Client
+* OneOf
 
 ## Getting Started
 
