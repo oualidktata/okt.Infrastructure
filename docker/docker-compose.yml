@@ -10,3 +10,9 @@ services:
       - SA_PASSWORD=P4ssw()rd
     ports:
       - 1433:1433
+    volumes:
+      - arai-mssql:/var/opt/mssql
+
+volumes:
+  arai-mssql: # used to keep data if mssql container is recreated
+
