@@ -1,4 +1,4 @@
-namespace Infra.oAuthService
+namespace Infra.OAuth
 {
   public interface IOAuthSettingsFactory
   {
