@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Infra.oAuthService
+namespace Infra.OAuth
 {
   public class M2MOAuthFlowService : IM2MOAuthFlowService
   {
@@ -43,7 +43,7 @@ namespace Infra.oAuthService
       string requestUrl = Settings.Issuer + Settings.TokenEndpoint;
       var request = new HttpRequestMessage(HttpMethod.Post, requestUrl)
       {
-        Content = new FormUrlEncodedContent(postMessage)
+        Content = new FormUrlEncodedContent(postMessage!)
       };
 
       var response = await client.SendAsync(request);
@@ -51,7 +51,7 @@ namespace Infra.oAuthService
       if (response.IsSuccessStatusCode)
       {
         var json = await response.Content.ReadAsStringAsync();
-        _token = JsonConvert.DeserializeObject<AuthenticationToken>(json);
+        _token = JsonConvert.DeserializeObject<AuthenticationToken>(json)!;
         _token.ExpiresAt = DateTime.UtcNow.AddSeconds(_token.ExpiresIn);
       }
       else

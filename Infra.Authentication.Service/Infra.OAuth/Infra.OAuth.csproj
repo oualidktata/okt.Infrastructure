@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Nullable>enable</Nullable>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Infra.oAuthService</AssemblyName>
-    <RootNamespace>Infra.oAuthService</RootNamespace>
+    <AssemblyName>Infra.OAuth</AssemblyName>
+    <RootNamespace>Infra.OAuth</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

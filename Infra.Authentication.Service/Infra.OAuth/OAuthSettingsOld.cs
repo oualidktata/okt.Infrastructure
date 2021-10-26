@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Infra.oAuthService
+namespace Infra.OAuth
 {
     //public class OAuthSettings : IOAuthSettings
     //{

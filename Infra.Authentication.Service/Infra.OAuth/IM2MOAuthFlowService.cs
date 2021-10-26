@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Infra.oAuthService
+namespace Infra.OAuth
 {
     public interface IM2MOAuthFlowService
     {
