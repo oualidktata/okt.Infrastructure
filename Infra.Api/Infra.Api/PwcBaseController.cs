@@ -4,7 +4,7 @@ using Infra.MediatR.Events;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Troupon.Catalog.Api.Controllers
+namespace Infra.Api
 {
   [ApiController]
   [Route("api/[controller]")]

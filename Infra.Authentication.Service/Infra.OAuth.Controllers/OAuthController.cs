@@ -14,7 +14,7 @@ namespace Infra.OAuth.Controllers
   [Route("api/v{version:apiVersion}/[controller]")]
   [ApiVersion("1.0")]
   [ApiConventionType(typeof(PwcApiConventions))]
-  public class OAuthController : ControllerBase
+  public class OAuthController : Controller
   {
     private IM2MOAuthFlowService TokenService { get; }
 
