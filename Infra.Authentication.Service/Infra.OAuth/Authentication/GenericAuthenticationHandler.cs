@@ -5,13 +5,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Infra.OAuth;
+using Infra.Features.OAuth;
 using Infra.OAuth.Introspection.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +21,8 @@ namespace Infra.OAuth.Authentication
 {
   public class GenericAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions>
   {
+    private IFeatureManager FeatureManager { get; }
+
     private IOAuthSettingsFactory AuthSettingsFactory { get; }
 
     public GenericAuthenticationHandler(
@@ -27,27 +30,44 @@ namespace Infra.OAuth.Authentication
       ILoggerFactory logger,
       UrlEncoder encoder,
       ISystemClock clock,
+      IFeatureManager featureManager,
       IOAuthSettingsFactory authSettingsFactory)
       : base(options, logger, encoder, clock)
     {
+      FeatureManager = featureManager;
       AuthSettingsFactory = authSettingsFactory;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-      if (AllowAnonymous())
+      if (await ShouldSkipAuthentication())
       {
         return AuthenticateResult.NoResult();
       }
 
-      var token = Request.GetAuthorizationToken();
-      return await GenerateAuthenticationResult(token);
+      return await DefaultAuthenticationHandling();
+    }
+
+    private async Task<bool> ShouldSkipAuthentication()
+    {
+      return await FeatureDisabled() || AllowAnonymous();
+    }
+
+    private async Task<bool> FeatureDisabled()
+    {
+      return await FeatureManager.IsEnabledAsync(OAuthFeatureFlags.GenericAuthenticationHandlerDisabled);
     }
 
     private bool AllowAnonymous()
     {
       var endpoint = Context.GetEndpoint();
       return endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null;
+    }
+
+    private async Task<AuthenticateResult> DefaultAuthenticationHandling()
+    {
+      var token = Request.GetAuthorizationToken();
+      return await GenerateAuthenticationResult(token);
     }
 
     private async Task<AuthenticateResult> GenerateAuthenticationResult(string token)
