@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Authentication
 {
   public class TokenAuthenticationOptions : AuthenticationSchemeOptions
   {

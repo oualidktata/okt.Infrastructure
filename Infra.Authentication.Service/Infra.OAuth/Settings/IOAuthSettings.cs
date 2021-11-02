@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Settings
 {
   public interface IOAuthSettings
   {

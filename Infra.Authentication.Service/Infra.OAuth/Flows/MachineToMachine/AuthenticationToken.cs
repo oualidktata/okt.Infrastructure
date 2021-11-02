@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Flows.MachineToMachine
 {
   public class AuthenticationToken
   {

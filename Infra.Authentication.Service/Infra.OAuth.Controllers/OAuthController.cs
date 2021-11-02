@@ -1,5 +1,6 @@
 using Infra.Api.Conventions;
 using Infra.Authorization.Policies;
+using Infra.OAuth.Flows.MachineToMachine;
 using Infra.OAuth.Introspection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,13 @@ namespace Infra.OAuth.Controllers
   [ApiConventionType(typeof(PwcApiConventions))]
   public class OAuthController : Controller
   {
-    private IM2MOAuthFlowService TokenService { get; }
+    private IM2MOAuthFlow M2MOAuthFlow { get; }
 
     private IJwtIntrospector JwtIntrospector { get; }
 
-    public OAuthController(IM2MOAuthFlowService tokenService, IJwtIntrospector jwtIntrospector)
+    public OAuthController(IM2MOAuthFlow m2mOAuthFlow, IJwtIntrospector jwtIntrospector)
     {
-      TokenService = tokenService;
+      M2MOAuthFlow = m2mOAuthFlow;
       JwtIntrospector = jwtIntrospector;
     }
 
@@ -37,7 +38,7 @@ namespace Infra.OAuth.Controllers
     {
       try
       {
-        var token = await TokenService.GetToken();
+        var token = await M2MOAuthFlow.GetToken();
         if (token == null)
         {
           return await Task.FromResult(StatusCode(StatusCodes.Status500InternalServerError, "Token is empty"));

@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Infra.Features.OAuth;
 using Infra.OAuth.Introspection.Jwt;
+using Infra.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

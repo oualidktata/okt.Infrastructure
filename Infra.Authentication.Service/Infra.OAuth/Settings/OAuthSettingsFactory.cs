@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Settings
 {
   public class OAuthSettingsFactory : IOAuthSettingsFactory
   {

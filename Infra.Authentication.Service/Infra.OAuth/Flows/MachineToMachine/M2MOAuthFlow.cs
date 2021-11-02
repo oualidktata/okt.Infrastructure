@@ -1,3 +1,4 @@
+using Infra.OAuth.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -5,14 +6,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Flows.MachineToMachine
 {
-  public class M2MOAuthFlowService : IM2MOAuthFlowService
+  public class M2MOAuthFlow : IM2MOAuthFlow
   {
     private AuthenticationToken _token = new AuthenticationToken();
     private IOAuthSettings Settings { get; }
 
-    public M2MOAuthFlowService(IOAuthSettingsFactory authSettingsFactory)
+    public M2MOAuthFlow(IOAuthSettingsFactory authSettingsFactory)
     {
       Settings = authSettingsFactory.GetDefaultMachineToMachine();
     }
