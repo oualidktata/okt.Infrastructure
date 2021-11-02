@@ -33,52 +33,6 @@ namespace Troupon.Catalog.Api.DependencyInjectionExtensions
           Items = schema,
         });
 
-        #region sample
-        //var sample = new OpenApiExample()
-        //{
-        //    //Reference = new OpenApiReference
-        //    //{
-        //    //    Type = ReferenceType.Example,
-        //    //    Id = "example1",
-        //    //},
-        //    Value = new OpenApiObject
-        //    {
-        //        ["versions"] = new OpenApiArray
-        //        {
-        //            new OpenApiObject
-        //            {
-        //                ["status"] = new OpenApiString("Status1"),
-        //                ["id"] = new OpenApiString("v1"),
-        //                //["links"] = new OpenApiArray
-        //                //{
-        //                //    new OpenApiObject
-        //                //    {
-        //                //        ["href"] = new OpenApiString("http://example.com/1"),
-        //                //        ["rel"] = new OpenApiString("sampleRel1")
-        //                //    }
-        //                //}
-        //            },
-
-        //            new OpenApiObject
-        //            {
-        //                ["status"] = new OpenApiString("Status2"),
-        //                ["id"] = new OpenApiString("v2"),
-        //                //["links"] = new OpenApiArray
-        //                //{
-        //                //    new OpenApiObject
-        //                //    {
-        //                //        ["href"] = new OpenApiString("http://example.com/2"),
-        //                //        ["rel"] = new OpenApiString("sampleRel2")
-        //                //    }
-        //                //}
-        //            }
-        //        }
-        //    }
-        //};
-        //var samples = new Dictionary<string, OpenApiExample>();
-        //samples.Add("sample1", sample);
-        #endregion
-
         operation.RequestBody.Content.Clear();
         operation.RequestBody.Content.Add("application/octet-stream", new OpenApiMediaType()
         {
@@ -87,52 +41,12 @@ namespace Troupon.Catalog.Api.DependencyInjectionExtensions
             Type = "string",
             Format = "binary",
             Properties = props
-
-            //Example= new Open() { Summary= @"Something as example for application/octet-stream (Type:String and Format:Binary)" }
-            //Properties = props
-            //Type = "object",
-            //Properties = props
           },
-          //Examples = samples
         });
-
-        //var actionAttributes = context.MethodInfo.GetCustomAttributes(true);
-        //var controllerAttributes = context.MethodInfo.DeclaringType.GetTypeInfo().GetCustomAttributes(true);
-        //var actionAndControllerAttributes = actionAttributes.Union(controllerAttributes);
-        //ApplySwaggerOperationAttribute(operation, actionAttributes);
-        //ApplySwaggerOperationFilterAttributes(operation, context, actionAndControllerAttributes);
-        //ApplySwaggerResponseAttributes(operation, actionAndControllerAttributes, context);
-
-        //operation.Parameters.Add(new OpenApiParameter
-        //{
-        //    Name = "uploadedFile",
-        //   // Content = new Dictionary<string, OpenApiMediaType>() { }
-        //    In = ParameterLocation.Query,
-        //    Description = "Upload File",
-        //    Required = true,
-        //    Ty
-        //    Type = "file"
-        //});
       }
-
-      //if (operation.OperationId.ToLower() == "apivaluesuploadpost")
-      //{
-      //    operation.Parameters.Clear();
-      //    operation.Parameters.Add(new NonBodyParameter
-      //    {
-      //        Name = "uploadedFile",
-      //        In = "formData",
-      //        Description = "Upload File",
-      //        Required = true,
-      //        Type = "file"
-      //    });
-      //    operation.Consumes.Add("multipart/form-data");
-      //}
     }
 
-    private static void ApplySwaggerOperationAttribute(
-       OpenApiOperation operation,
-       IEnumerable<object> actionAttributes)
+    private static void ApplySwaggerOperationAttribute(OpenApiOperation operation, IEnumerable<object> actionAttributes)
     {
       var swaggerOperationAttribute = actionAttributes
           .OfType<SwaggerOperationAttribute>()
@@ -206,37 +120,4 @@ namespace Troupon.Catalog.Api.DependencyInjectionExtensions
       }
     }
   }
-
-  //    public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
-  //    {
-
-  //        if (context.MethodInfo == null) return;
-
-
-
-  //        if (operation.OperationId?.ToLower() == "UploadDocument".ToLower())
-  //        {
-
-
-  //            var props = new Dictionary<string, OpenApiSchema>();
-
-  //            props.Add("fileName",
-  //                new OpenApiSchema
-  //                {
-  //                    Type = "object",
-  //                    Items = { Type = "string", Format = "binary", }
-
-  //                });
-
-  //            //var uploadPro= new KeyValuePair<string,>
-  //            operation.RequestBody.Content.Add("formData", new OpenApiMediaType()
-  //            {
-  //                Schema = new OpenApiSchema
-  //                {
-  //                    Type = "object",
-  //                    Properties = props
-  //                }
-  //            });
-  //        }
-  //}
 }
