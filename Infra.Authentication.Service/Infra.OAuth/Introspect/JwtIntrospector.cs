@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Infra.OAuth.Introspection.Jwt;
+using Infra.OAuth.Settings;
 using Microsoft.AspNetCore.Http;
 
 namespace Infra.OAuth.Introspection

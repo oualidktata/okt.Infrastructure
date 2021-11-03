@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
-namespace Infra.OAuth
+namespace Infra.OAuth.Flows.MachineToMachine
 {
-    public interface IM2MOAuthFlowService
+    public interface IM2MOAuthFlow
     {
         Task<string> GetToken();
     }
