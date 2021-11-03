@@ -14,6 +14,9 @@ namespace Infra.ExceptionHandling.Extensions
     public static void AddWebExceptionHandler(this IServiceCollection services)
     {
       services.AddSingleton<IGenericExceptionHandler, GenericWebExceptionHandler>();
+      services.AddControllers()
+       .AddApplicationPart(typeof(ErrorController).Assembly)
+       .AddControllersAsServices();
     }
   }
 }
