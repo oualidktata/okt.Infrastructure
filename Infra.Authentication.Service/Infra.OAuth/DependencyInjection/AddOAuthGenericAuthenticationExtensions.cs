@@ -6,7 +6,6 @@ using Infra.OAuth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.FeatureManagement;
 
 namespace Infra.OAuth.DependencyInjection
 {
@@ -14,8 +13,6 @@ namespace Infra.OAuth.DependencyInjection
   {
     public static IOAuthBuilder AddOAuthGenericAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-      services.AddFeatureManagement();
-
       services.AddScoped<IOAuthSettingsFactory>(sp => new OAuthSettingsFactory(configuration));
 
       services.AddAuthentication(options =>
