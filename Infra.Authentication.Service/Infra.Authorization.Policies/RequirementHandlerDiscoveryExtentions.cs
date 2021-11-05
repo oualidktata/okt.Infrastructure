@@ -20,7 +20,6 @@ namespace Infra.Authorization.Policies
       {
         foreach (var handlerType in FindHandlerTypes(policyAssembly))
         {
-          // services.AddScoped<IAuthorizationHandler, RequireTenant.Handler>();
           services.AddScoped(typeof(IAuthorizationHandler), handlerType);
         }
       }

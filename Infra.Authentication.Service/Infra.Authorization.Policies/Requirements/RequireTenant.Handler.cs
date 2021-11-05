@@ -1,5 +1,4 @@
 using Infra.Authorization.Policies.Requirements.Base;
-using Microsoft.FeatureManagement;
 
 namespace Infra.Authorization.Policies.Requirements
 {
@@ -10,9 +9,6 @@ namespace Infra.Authorization.Policies.Requirements
   {
     public class Handler : BaseRequirementHandler<RequireTenant>
     {
-      public Handler(IFeatureManager featureManager) : base(featureManager)
-      {
-      }
     }
   }
 }

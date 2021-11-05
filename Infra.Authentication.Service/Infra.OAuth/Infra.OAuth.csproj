@@ -15,8 +15,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.9.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Infra.Features\Infra.Features.csproj" />
-  </ItemGroup>
-
 </Project>
