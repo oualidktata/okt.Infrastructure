@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Infra.Features\Infra.Features.csproj" />
-  </ItemGroup>
-
 </Project>

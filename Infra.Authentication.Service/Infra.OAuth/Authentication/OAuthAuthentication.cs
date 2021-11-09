@@ -3,92 +3,47 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Infra.Features.OAuth;
 using Infra.OAuth.Introspection.Jwt;
 using Infra.OAuth.Settings;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infra.OAuth.Authentication
 {
-  public class GenericAuthenticationHandler : AuthenticationHandler<TokenAuthenticationOptions>
+  public class OAuthAuthentication : IOAuthAuthentication
   {
-    private IFeatureManager FeatureManager { get; }
-
     private IOAuthSettingsFactory AuthSettingsFactory { get; }
 
-    public GenericAuthenticationHandler(
-      IOptionsMonitor<TokenAuthenticationOptions> options,
-      ILoggerFactory logger,
-      UrlEncoder encoder,
-      ISystemClock clock,
-      IFeatureManager featureManager,
-      IOAuthSettingsFactory authSettingsFactory)
-      : base(options, logger, encoder, clock)
+    public OAuthAuthentication(IOAuthSettingsFactory authSettingsFactory)
     {
-      FeatureManager = featureManager;
       AuthSettingsFactory = authSettingsFactory;
     }
 
-    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
-    {
-      if (await ShouldSkipAuthentication())
-      {
-        return AuthenticateResult.NoResult();
-      }
-
-      return await DefaultAuthenticationHandling();
-    }
-
-    private async Task<bool> ShouldSkipAuthentication()
-    {
-      return await FeatureDisabled() || AllowAnonymous();
-    }
-
-    private async Task<bool> FeatureDisabled()
-    {
-      return await FeatureManager.IsEnabledAsync(OAuthFeatureFlags.GenericAuthenticationHandlerDisabled);
-    }
-
-    private bool AllowAnonymous()
-    {
-      var endpoint = Context.GetEndpoint();
-      return endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null;
-    }
-
-    private async Task<AuthenticateResult> DefaultAuthenticationHandling()
-    {
-      var token = Request.GetAuthorizationToken();
-      return await GenerateAuthenticationResult(token);
-    }
-
-    private async Task<AuthenticateResult> GenerateAuthenticationResult(string token)
-    {
-      try
-      {
-        var success = await Authenticate(token);
-        return AuthenticateResult.Success(success);
-      }
-      catch (SecurityTokenValidationException ex)
-      {
-        return AuthenticateResult.Fail(ex.Message);
-      }
-    }
-
-    private async Task<AuthenticationTicket> Authenticate(string token)
+    public async Task<IEnumerable<Claim>> AuthenticateAsync(string token)
     {
       var jwt = await ValidateToken(token);
       AuthorizeClaims(jwt.Claims);
-      return GenerateAuthenticationTicket(jwt.Claims);
+      return ApplyClaimsModifier(jwt.Claims);
+    }
+
+    // TODO: Give possibility to be configurable, by adding claims, based on the applicaiton
+    private IEnumerable<Claim> ApplyClaimsModifier(IEnumerable<Claim> tokenClaims)
+    {
+      var claims = tokenClaims.ToList();
+
+      claims.Add(new Claim("TenantId", "pwc"));
+      if (claims.Any(c => c.Type == "scp" && c.Value == "admin"))
+      {
+        claims.Add(new Claim(ClaimTypes.Role, "admin"));
+      }
+      else
+      {
+        claims.Add(new Claim(ClaimTypes.Role, "user"));
+      }
+
+      return claims;
     }
 
     private async Task<JwtSecurityToken> ValidateToken(string token)
@@ -171,26 +126,6 @@ namespace Infra.OAuth.Authentication
       {
         throw new SecurityTokenValidationException("Need \"arai\" scope to be authorized");
       }
-    }
-
-    private AuthenticationTicket GenerateAuthenticationTicket(IEnumerable<Claim> tokenClaims)
-    {
-      var claims = tokenClaims.ToList();
-
-      // TODO: Give possibility to be configurable, by adding claims, based on the applicaiton
-      claims.Add(new Claim("TenantId", "pwc"));
-      if (claims.Any(c => c.Type == "scp" && c.Value == "admin"))
-      {
-        claims.Add(new Claim(ClaimTypes.Role, "admin"));
-      }
-      else
-      {
-        claims.Add(new Claim(ClaimTypes.Role, "user"));
-      }
-
-      var identity = new ClaimsIdentity(claims, Scheme.Name);
-      var principal = new ClaimsPrincipal(identity);
-      return new AuthenticationTicket(principal, Scheme.Name);
     }
   }
 }
