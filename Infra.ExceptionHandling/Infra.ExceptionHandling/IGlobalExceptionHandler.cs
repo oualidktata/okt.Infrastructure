@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Infra.ExceptionHandling
 {
-  public interface IGenericExceptionHandler
+  public interface IGlobalExceptionHandler
   {
     ProblemDetails Handle(Exception exception);
   }

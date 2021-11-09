@@ -8,9 +8,9 @@ namespace Infra.ExceptionHandling.Controllers
   [ApiExplorerSettings(IgnoreApi = true)]
   public class ErrorController : Controller
   {
-    private readonly IGenericExceptionHandler handler;
+    private readonly IGlobalExceptionHandler handler;
 
-    public ErrorController(IGenericExceptionHandler handler)
+    public ErrorController(IGlobalExceptionHandler handler)
     {
       this.handler = handler;
     }
