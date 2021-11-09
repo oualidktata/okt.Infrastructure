@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Infra.ExceptionHandling
 {
-  public class DefaultExceptionHandler
+  public class ServerErrorExceptionHandler
   {
     public ProblemDetails Handle(Exception exception, bool showDetails)
     {
